@@ -1,3 +1,4 @@
+import DashboardView from '@/views/DashboardView.vue';
 import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
@@ -21,6 +22,13 @@ const routes = [
     name: 'register',
     component: RegisterView,
     meta: { public: true },
+  },
+
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
+    meta: { requiresAuth: true },
   },
 ];
 

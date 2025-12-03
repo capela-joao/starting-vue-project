@@ -36,19 +36,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { register } from '@/api/userService';
+import router from '@/router';
 
 const name = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const error = ref('');
+const loading = ref(false);
 
 const handleRegister = async () => {
   try {
     error.value = '';
+    loading.value = true;
 
     if (password.value !== confirmPassword.value) {
       error.value = 'As senhas não coincidem';
+      loading.value = false;
+      return;
     }
     const data = await register({
       name: name.value,
@@ -58,12 +63,21 @@ const handleRegister = async () => {
     });
 
     console.log('Usuário registrado com sucesso!', data);
+
+    name.value = '';
+    email.value = '';
+    password.value = '';
+    confirmPassword.value = '';
+
+    router.push('/login');
   } catch (err: any) {
     if (err.response) {
       error.value = err.response.data.message || 'Erro ao registrar';
     } else {
       error.value = 'Não foi possível conectar ao servidor.';
     }
+  } finally {
+    loading.value = false;
   }
 };
 </script>
