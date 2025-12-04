@@ -4,8 +4,8 @@ import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
-import axios from 'axios';
 import ProfileView from '@/views/ProfileView.vue';
+import { api } from '@/api/api';
 
 const routes = [
   {
@@ -52,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     try {
-      const res = await axios.get('/profile', { withCredentials: true });
+      const res = await api.get('/users/profile', { withCredentials: true });
       authStore.setAuth(res.data);
       next();
     } catch {

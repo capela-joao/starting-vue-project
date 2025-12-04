@@ -44,10 +44,18 @@
 </template>
 <script setup>
 import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
+import { api } from '@/api/api';
 
 const auth = useAuthStore();
 
-function handleLogout() {
-  auth.logout();
-}
+const handleLogout = async () => {
+  try {
+    await api.post('/users/logout', {}, { withCredentials: true });
+    auth.logout();
+    router.push('/login');
+  } catch (err) {
+    console.log(err);
+  }
+};
 </script>
