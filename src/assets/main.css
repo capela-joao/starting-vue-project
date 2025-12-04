@@ -12,7 +12,7 @@
   }
 
   input {
-    @apply border-b bg-transparent border-gray-600 px-3 py-2 outline-none w-full;
+    @apply border-b bg-transparent border-gray-600 px-3 py-2 outline-none w-full text-xs;
   }
 
   input:focus {
@@ -23,8 +23,12 @@
     @apply w-full max-w-2xl;
   }
 
+  label {
+    @apply py-2;
+  }
+
   button {
-    @apply p-2 bg-gray-50 w-full max-w-xs text-gray-950 rounded-md font-bold text-lg opacity-90 transition
+    @apply p-2 bg-gray-50 text-gray-950 rounded-md font-bold text-lg opacity-90 transition
     duration-200
     transform
     hover:-translate-y-1

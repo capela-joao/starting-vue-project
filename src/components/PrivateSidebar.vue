@@ -8,12 +8,28 @@
 
     <div class="flex flex-col justify-between h-full">
       <div class="flex flex-col gap-6 px-6">
-        <router-link to="/dashboard" class="hover:border-b hover:border-gray-50"
-          >Dashboard</router-link
+        <router-link
+          to="/dashboard"
+          :class="[
+            $route.path === '/dashboard'
+              ? 'bg-gray-100 text-gray-950'
+              : 'bg-transparent text-gray-50',
+            'p-2 rounded-md transition-colors duration-300 ease-in-out',
+          ]"
         >
-        <router-link to="/profile" class="hover:border-b hover:border-gray-50"
-          >Meu perfil</router-link
+          Dashboard
+        </router-link>
+        <router-link
+          to="/profile"
+          :class="[
+            $route.path === '/profile'
+              ? 'bg-gray-100 text-gray-950'
+              : 'bg-transparent text-gray-50',
+            'p-2 rounded-md transition-colors duration-300 ease-in-out',
+          ]"
         >
+          Profile
+        </router-link>
       </div>
       <div class="flex gap-6 px-6">
         <button
@@ -26,7 +42,7 @@
     </div>
   </aside>
 </template>
-<script>
+<script setup>
 import { useAuthStore } from '@/stores/auth';
 
 const auth = useAuthStore();

@@ -1,26 +1,30 @@
 <template>
-  <div class="w-full flex flex-col gap-4 p-4 justify-center items-center">
+  <div class="w-full flex flex-col gap-4 p-4 items-center">
     <h1>Criar Conta</h1>
 
-    <form @submit.prevent="handleRegister" class="flex flex-col items-center">
+    <form @submit.prevent="handleRegister" class="flex flex-col">
+      <label for="name">Nome:</label>
       <input
         v-model="name"
         type="text"
         placeholder="Insira o seu nome"
         required
       />
+      <label for="email">E-mail:</label>
       <input
         v-model="email"
         type="email"
         placeholder="Insira o seu e-mail"
         required
       />
+      <label for="password">Senha:</label>
       <input
         v-model="password"
         type="password"
         placeholder="Insira a sua senha"
         required
       />
+      <label for="confirmPassword">Confirme sua senha:</label>
       <input
         v-model="confirmPassword"
         type="password"
