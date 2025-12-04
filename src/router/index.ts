@@ -3,6 +3,9 @@ import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import axios from 'axios';
+import ProfileView from '@/views/ProfileView.vue';
 
 const routes = [
   {
@@ -24,10 +27,17 @@ const routes = [
     meta: { public: true },
   },
 
+  // Private Routes -----------------
   {
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfileView,
     meta: { requiresAuth: true },
   },
 ];
@@ -35,6 +45,23 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    try {
+      const res = await axios.get('/profile', { withCredentials: true });
+      authStore.setAuth(res.data);
+      next();
+    } catch {
+      authStore.logout();
+      next('/login');
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

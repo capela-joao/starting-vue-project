@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full flex flex-col gap-4 p-4 justify-center items-center">
     <h1>Efetue o login</h1>
 
     <form @submit.prevent="handleLogin" class="flex flex-col items-center">
@@ -25,21 +25,28 @@
 import { ref } from 'vue';
 import { api } from '@/api/api';
 import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
 
 const email = ref('');
 const password = ref('');
 const error = ref('');
+const auth = useAuthStore();
 
 const handleLogin = async () => {
   error.value = '';
 
   try {
-    const data = await api.post('/users/login', {
+    const response = await api.post('/users/login', {
       email: email.value,
       password: password.value,
     });
 
-    console.log('Login realizado com sucesso!', data);
+    console.log('Login realizado com sucesso!', response);
+
+    auth.setAuth({
+      _id: response.data._id,
+      profileImage: response.data.profileImage,
+    });
 
     router.push('/dashboard');
   } catch (err) {
